@@ -12,13 +12,24 @@ function checkDeadline(deadline: string[] | string): void {
 }
 
 describe('Router', () => {
-  const token0 = new Token(ChainId.MAINNET, '0x0000000000000000000000000000000000000001', 18, 't0')
-  const token1 = new Token(ChainId.MAINNET, '0x0000000000000000000000000000000000000002', 18, 't1')
 
+  // Token Info for Goerli Testnet
+  const token0Add = '0xe802376580c10fe23f027e1e19ed9d54d4c9311e'
+  const token1Add = '0xda4a47edf8ab3c5eeeb537a97c5b66ea42f49cda'
+  const token0Dec = 18
+  const token1Dec = 18
+  const token0Sym = 'WBTC'
+  const token1Sym = 'USDT'
+
+  // Token instances 
+  const token0 = new Token(ChainId.MAINNET, token0Add, token0Dec, token0Sym)
+  const token1 = new Token(ChainId.MAINNET, token1Add, token1Dec, token1Sym)
+
+  // Creates instnance of token pair (WBTC,USDT) with 1000 of each token
   const pair_0_1 = new Pair(new TokenAmount(token0, JSBI.BigInt(1000)), new TokenAmount(token1, JSBI.BigInt(1000)))
-
+  // Creates instsance of token pair (WETH,WBTC) with 1000 of each token
   const pair_weth_0 = new Pair(new TokenAmount(WETH[ChainId.MAINNET], '1000'), new TokenAmount(token0, '1000'))
-
+  
   describe('#swapCallParameters', () => {
     describe('exact in', () => {
       it('ether to token1', () => {
