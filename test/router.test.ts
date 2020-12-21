@@ -14,8 +14,8 @@ function checkDeadline(deadline: string[] | string): void {
 describe('Router', () => {
 
   // Token Info for Goerli Testnet
-  const token0Add = '0xe802376580c10fe23f027e1e19ed9d54d4c9311e'
-  const token1Add = '0xda4a47edf8ab3c5eeeb537a97c5b66ea42f49cda'
+  const token0Add = '0xe802376580c10fE23F027e1E19Ed9D54d4C9311e'
+  const token1Add = '0xdA4a47eDf8ab3c5EeeB537A97c5B66eA42F49CdA'
   const token0Dec = 18
   const token1Dec = 18
   const token0Sym = 'WBTC'
@@ -29,7 +29,7 @@ describe('Router', () => {
   const pair_0_1 = new Pair(new TokenAmount(token0, JSBI.BigInt(1000)), new TokenAmount(token1, JSBI.BigInt(1000)))
   // Creates instsance of token pair (WETH,WBTC) with 1000 of each token
   const pair_weth_0 = new Pair(new TokenAmount(WETH[ChainId.MAINNET], '1000'), new TokenAmount(token0, '1000'))
-  
+
   describe('#swapCallParameters', () => {
     describe('exact in', () => {
       it('ether to token1', () => {

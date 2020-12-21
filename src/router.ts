@@ -3,59 +3,34 @@ import invariant from 'tiny-invariant'
 import { validateAndParseAddress } from './utils'
 import { CurrencyAmount, ETHER, Percent, Trade } from './entities'
 
-/**
- * Options for producing the arguments to send call to the router.
- */
-export interface TradeOptions {
-  /**
-   * How much the execution price is allowed to move unfavorably from the trade execution price.
-   */
-  allowedSlippage: Percent
-  /**
-   * How long the swap is valid until it expires, in seconds.
-   * This will be used to produce a `deadline` parameter which is computed from when the swap call parameters
-   * are generated.
-   */
-  ttl: number
-  /**
-   * The account that should receive the output of the swap.
-   */
-  recipient: string
+// Options for producing the arguments to send call to the router.
+export interface TradeOptions {                   
 
-  /**
-   * Whether any of the tokens in the path are fee on transfer tokens, which should be handled with special methods
-   */
-  feeOnTransfer?: boolean
+  allowedSlippage: Percent                        // How much the execution price is allowed to move unfavorably from the trade execution price.
+  ttl: number                                     // How long the swap is valid until it expires, in seconds. This will be used to produce a `deadline` parameter which is computed from when the swap call parameters are generated.
+  recipient: string                               // The account that should receive the output of the swap.
+  feeOnTransfer?: boolean                         // Whether any of the tokens in the path are fee on transfer tokens, which should be handled with special methods
+
 }
 
 export interface TradeOptionsDeadline extends Omit<TradeOptions, 'ttl'> {
-  /**
-   * When the transaction expires.
-   * This is an atlernate to specifying the ttl, for when you do not want to use local time.
-   */
-  deadline: number
+  deadline: number                                // When the transaction expires. This is an atlernate to specifying the ttl, for when you do not want to use local time.
 }
 
-/**
- * The parameters to use in the call to the Uniswap V2 Router to execute a trade.
- */
+// The parameters to use in the call to the Uniswap V2 Router to execute a trade.
 export interface SwapParameters {
-  /**
-   * The method to call on the Uniswap V2 Router.
-   */
-  methodName: string
-  /**
-   * The arguments to pass to the method, all hex encoded.
-   */
-  args: (string | string[])[]
-  /**
-   * The amount of wei to send in hex.
-   */
-  value: string
+
+  methodName: string                              // The method to call on the Uniswap V2 Router.
+  args: (string | string[])[]                     // The arguments to pass to the method, all hex encoded.
+  value: string                                   // The amount of wei to send in hex.
+
 }
 
+// Converts currency amount to a string
 function toHex(currencyAmount: CurrencyAmount) {
+
   return `0x${currencyAmount.raw.toString(16)}`
+
 }
 
 const ZERO_HEX = '0x0'
@@ -64,10 +39,9 @@ const ZERO_HEX = '0x0'
  * Represents the Uniswap V2 Router, and has static methods for helping execute trades.
  */
 export abstract class Router {
-  /**
-   * Cannot be constructed.
-   */
-  private constructor() {}
+ 
+  private constructor() {}                      // Cannot be constructed.
+  
   /**
    * Produces the on-chain method name to call and the hex encoded parameters to pass as arguments for a given trade.
    * @param trade to produce call parameters for
